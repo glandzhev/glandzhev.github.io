@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Georgi Landzhev – QA Engineer</title>
+<meta name="description" content="Georgi Landzhev – QA Engineer focused on payments and iGaming. Manual, API and Playwright test automation. Sofia, Bulgaria.">
+<meta property="og:title" content="Georgi Landzhev – QA Engineer">
+<meta property="og:description" content="QA Engineer | Payments & iGaming | Manual & API Testing | Playwright (JS/TS)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f6f2; --panel:#ffffff; --side:#ffffff; --text:#1d2430; --muted:#5d6675; --line:#e5e3dc;
+  --accent:#0f6e6e; --accent-soft:#e3f1ef; --chip:#f0efe9; --shadow:0 1px 2px rgba(20,30,40,.05),0 4px 16px rgba(20,30,40,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11161d; --panel:#18202a; --side:#151c25; --text:#e7ebf0; --muted:#9aa5b4; --line:#273240;
+    --accent:#4fc2b4; --accent-soft:#183a38; --chip:#202a36; --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11161d; --panel:#18202a; --side:#151c25; --text:#e7ebf0; --muted:#9aa5b4; --line:#273240;
+  --accent:#4fc2b4; --accent-soft:#183a38; --chip:#202a36; --shadow:none;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Sidebar */
+.side{position:fixed;inset:0 auto 0 0;width:250px;background:var(--side);border-right:1px solid var(--line);padding:24px 18px;display:flex;flex-direction:column;gap:20px;z-index:10}
+.me{display:flex;gap:12px;align-items:center}
+.me .av{width:44px;height:44px;flex:none}
+.me b{display:block;font-size:15px}
+.me span{font-size:12.5px;color:var(--muted)}
+.theme{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:9px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--text);font:500 13.5px Inter,sans-serif;cursor:pointer}
+.theme:hover{border-color:var(--accent)}
+nav ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+nav a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;color:var(--muted);font-size:14px;font-weight:500}
+nav a:hover,nav a.on{background:var(--accent-soft);color:var(--accent);text-decoration:none}
+nav svg{width:16px;height:16px;flex:none}
+.side .foot{margin-top:auto;font-size:12px;color:var(--muted)}
+
+/* Avatar */
+.av{border-radius:50%;overflow:hidden;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:700;position:relative}
+.av img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+
+main{margin-left:250px;padding:0 48px}
+.wrap{max-width:860px;margin:0 auto}
+section{padding:72px 0 8px}
+h2{font-size:28px;letter-spacing:-.02em;margin:0 0 4px}
+.sub{color:var(--muted);margin:0 0 28px}
+
+/* Hero */
+.hero{padding-top:64px;min-height:92vh;display:flex;flex-direction:column;justify-content:center}
+.hero .av{width:140px;height:140px;font-size:44px;border:4px solid var(--panel);box-shadow:0 0 0 2px var(--accent)}
+.badge{display:inline-flex;align-items:center;gap:8px;margin:28px 0 14px;padding:5px 12px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:13px;font-weight:600;width:fit-content}
+.badge i{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 7px transparent}100%{box-shadow:0 0 0 0 transparent}}
+h1{font-size:clamp(36px,6vw,58px);line-height:1.08;letter-spacing:-.035em;margin:0}
+h1 em{font-style:normal;color:var(--accent)}
+.tag{font-size:clamp(19px,2.4vw,24px);color:var(--muted);margin:14px 0 18px;font-weight:500}
+.lead{max-width:680px;font-size:17px;margin:0 0 28px}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:10px;font-weight:600;font-size:15px;border:1px solid var(--line);background:var(--panel);color:var(--text)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+:root[data-theme="dark"] .btn.primary{color:#0d1a1a}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.primary{color:#0d1a1a}}
+.btn:hover{text-decoration:none;transform:translateY(-1px)}
+.btn svg{width:17px;height:17px}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:44px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+.stat b{display:block;font-size:24px;letter-spacing:-.02em;color:var(--accent)}
+.stat span{font-size:13px;color:var(--muted)}
+
+/* Cards */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:var(--shadow)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.chip{font-size:12.5px;font-weight:500;padding:3px 10px;border-radius:999px;background:var(--chip);color:var(--muted);border:1px solid var(--line)}
+
+/* Timeline */
+.tl{position:relative;display:flex;flex-direction:column;gap:18px;padding-left:28px}
+.tl:before{content:"";position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:var(--line)}
+.job{position:relative}
+.job:before{content:"";position:absolute;left:-28px;top:28px;width:12px;height:12px;border-radius:50%;background:var(--panel);border:3px solid var(--accent)}
+.job h3{margin:0;font-size:19px;letter-spacing:-.01em}
+.job .co{font-weight:600;color:var(--accent)}
+.job .meta{font-size:13.5px;color:var(--muted);margin:2px 0 10px}
+.job p{margin:0 0 10px;color:var(--muted)}
+.job ul{margin:0;padding-left:18px}
+.job li{margin:4px 0}
+
+/* Skills */
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.grid .card h3{margin:0;font-size:16px;display:flex;align-items:center;gap:8px}
+.grid .card h3 svg{width:18px;height:18px;color:var(--accent)}
+
+/* Edu / certs */
+.list{display:flex;flex-direction:column;gap:14px}
+.row{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.row h3{margin:0;font-size:17px}
+.row .org{color:var(--muted);font-size:14.5px}
+.when{font-size:13px;color:var(--muted);white-space:nowrap;padding:3px 10px;border:1px solid var(--line);border-radius:999px;height:fit-content}
+.cred{display:inline-block;margin-top:8px;font-size:14px;font-weight:600}
+
+/* Contact */
+.contact{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.contact a.card{display:flex;flex-direction:column;gap:4px;color:var(--text)}
+.contact a.card:hover{border-color:var(--accent);text-decoration:none}
+.contact small{color:var(--muted)}
+.contact b{font-size:15px;overflow-wrap:anywhere}
+footer{padding:56px 0 40px;color:var(--muted);font-size:13px;text-align:center}
+
+/* Mobile */
+.top{display:none}
+@media (max-width:900px){
+  .side{display:none}
+  .top{display:flex;position:sticky;top:0;z-index:10;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px;background:var(--side);border-bottom:1px solid var(--line)}
+  .top nav{overflow-x:auto;scrollbar-width:none}
+  .top nav ul{flex-direction:row}
+  .top nav a{padding:6px 10px;font-size:13px;white-space:nowrap}
+  .top nav svg{display:none}
+  .top .theme{width:auto;padding:7px 10px;flex:none}
+  .top .theme span{display:none}
+  main{margin-left:0;padding:0 16px}
+  .hero{min-height:auto;padding-top:40px}
+  section{padding-top:56px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .grid,.contact{grid-template-columns:1fr}
+  .row{flex-direction:column;gap:8px}
+}
+@media print{.side,.top,.theme,.btns{display:none}main{margin:0}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"/></symbol>
+  <symbol id="i-brief" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 6-6 6 6 6M16 6l6 6-6 6"/></symbol>
+  <symbol id="i-cap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/></symbol>
+  <symbol id="i-award" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="m8.5 14-1.5 8 5-3 5 3-1.5-8"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m-5-5 5 5 5-5M4 21h16"/></symbol>
+  <symbol id="i-in" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1V21h-4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.73 0-2 1.35-2 2.75V21h-4z"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></symbol>
+  <symbol id="i-bug" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="13" rx="5"/><path d="M12 7V4M9 4l1.5 2M15 4l-1.5 2M3 12h4M17 12h4M4 18l3-2M20 18l-3-2M4 6l3 2M20 6l-3 2"/></symbol>
+  <symbol id="i-db" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></symbol>
+  <symbol id="i-tool" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></symbol>
+</svg>
+
+<aside class="side">
+  <div class="me">
+    <div class="av"><img src="photo.jpg" alt="" onerror="this.remove()">GL</div>
+    <div><b>Georgi Landzhev</b><span>QA Engineer</span></div>
+  </div>
+  <button class="theme" type="button"><svg width="16" height="16"><use href="#i-moon"/></svg><span>Dark mode</span></button>
+  <nav aria-label="Sections"><ul>
+    <li><a href="#home"><svg><use href="#i-home"/></svg>Home</a></li>
+    <li><a href="#experience"><svg><use href="#i-brief"/></svg>Experience</a></li>
+    <li><a href="#skills"><svg><use href="#i-code"/></svg>Skills</a></li>
+    <li><a href="#education"><svg><use href="#i-cap"/></svg>Education</a></li>
+    <li><a href="#certifications"><svg><use href="#i-award"/></svg>Certifications</a></li>
+    <li><a href="#contact"><svg><use href="#i-mail"/></svg>Contact</a></li>
+  </ul></nav>
+  <div class="foot">Sofia, Bulgaria · Remote / Hybrid</div>
+</aside>
+
+<header class="top">
+  <nav aria-label="Sections"><ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul></nav>
+  <button class="theme" type="button" aria-label="Toggle dark mode"><svg width="16" height="16"><use href="#i-moon"/></svg><span>Dark mode</span></button>
+</header>
+
+<main><div class="wrap">
+
+<section id="home" class="hero">
+  <div class="av"><img src="photo.jpg" alt="Georgi Landzhev" onerror="this.remove()">GL</div>
+  <div class="badge"><i></i>Open to QA Engineering roles · Remote / Hybrid</div>
+  <h1>Hey, I'm <em>Georgi Landzhev</em></h1>
+  <p class="tag">QA Engineer · Payments &amp; iGaming · Playwright automation</p>
+  <p class="lead">QA Engineer with 6 years of experience across iGaming, mobile gaming and embedded automotive systems. I test payment and back-office flows for a Canadian online casino – deposits, withdrawals and shop purchases via Interac, Apple Pay, Worldpay and Nuvei – and build Playwright UI and API tests with AI-assisted development.</p>
+  <div class="btns">
+    <a class="btn primary" href="Georgi_Landzhev_CV.pdf" download><svg><use href="#i-down"/></svg>Download CV</a>
+    <a class="btn" href="https://www.linkedin.com/in/georgi-landzhev-816991139/" target="_blank" rel="noopener"><svg><use href="#i-in"/></svg>LinkedIn</a>
+    <a class="btn" href="mailto:glandzhev@gmail.com"><svg><use href="#i-mail"/></svg>Get in touch</a>
+  </div>
+  <div class="stats">
+    <div class="stat"><b>6 years</b><span>in software testing</span></div>
+    <div class="stat"><b>4 providers</b><span>Interac, Apple Pay, Worldpay, Nuvei</span></div>
+    <div class="stat"><b>UI + API</b><span>Playwright (JS/TS) automation</span></div>
+    <div class="stat"><b>MSc</b><span>Information Security</span></div>
+  </div>
+</section>
+
+<section id="experience">
+  <h2>Experience</h2>
+  <p class="sub">Where I've worked and what I do</p>
+  <div class="tl">
+    <article class="job card">
+      <h3>QA Engineer – Payments &amp; BizOps</h3>
+      <div class="co">Betty · Canadian online casino</div>
+      <div class="meta">Feb 2026 – Present · Sofia, Bulgaria</div>
+      <ul>
+        <li>Test end-to-end payment flows: deposits, withdrawals and in-app shop purchases.</li>
+        <li>Validate integrations with Interac, Apple Pay, Worldpay and Nuvei, including declines, refunds and edge cases.</li>
+        <li>Test back-office tools used by operations, payments and support teams.</li>
+        <li>Test REST APIs with Postman and verify transactions and account data with SQL in DBeaver.</li>
+        <li>Investigate defects in OpenSearch logs and browser DevTools and give developers clear root-cause evidence.</li>
+        <li>Manage test cases and runs in Testmo; track defects in JIRA.</li>
+        <li>Build automated UI and API tests with Playwright (JavaScript/TypeScript), using Claude Code for AI-assisted test development.</li>
+      </ul>
+      <div class="chips"><span class="chip">Payments</span><span class="chip">Postman</span><span class="chip">SQL</span><span class="chip">OpenSearch</span><span class="chip">Testmo</span><span class="chip">Playwright</span><span class="chip">Claude Code</span></div>
+    </article>
+    <article class="job card">
+      <h3>QA Engineer</h3>
+      <div class="co">Imperia Online · Mobile games</div>
+      <div class="meta">Jun 2025 – Jan 2026 · Sofia, Bulgaria</div>
+      <ul>
+        <li>Manual testing of mobile games on Android and iOS.</li>
+        <li>Validated functionality against business requirements and specifications.</li>
+        <li>Created test plans and test cases; logged, tracked and verified defects in JIRA.</li>
+        <li>Regression testing in an Agile/Scrum team, working closely with developers.</li>
+      </ul>
+      <div class="chips"><span class="chip">Mobile testing</span><span class="chip">Regression</span><span class="chip">JIRA</span></div>
+    </article>
+    <article class="job card">
+      <h3>System Test Engineer</h3>
+      <div class="co">Visteon · Automotive embedded systems</div>
+      <div class="meta">Dec 2020 – Jun 2025 · Sofia, Bulgaria</div>
+      <ul>
+        <li>System validation testing of embedded automotive systems.</li>
+        <li>Designed and executed test cases from functional and system specifications.</li>
+        <li>Prepared test environments: hardware setup and software simulations.</li>
+        <li>Contributed to test reports, coverage reports and test automation initiatives.</li>
+      </ul>
+      <div class="chips"><span class="chip">System testing</span><span class="chip">Embedded</span><span class="chip">JIRA</span><span class="chip">Test automation</span></div>
+    </article>
+    <article class="job card">
+      <h3>Customer and Technical Support</h3>
+      <div class="co">SaaS Studio</div>
+      <div class="meta">Oct 2018 – Dec 2021 · Sofia, Bulgaria</div>
+      <ul>
+        <li>Handled requests from end users and merchants about payment statuses, account details and technical issues.</li>
+        <li>Investigated and escalated technical problems to the development team.</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<section id="skills">
+  <h2>Skills</h2>
+  <p class="sub">Tools and techniques I use every day</p>
+  <div class="grid">
+    <div class="card"><h3><svg><use href="#i-bug"/></svg>Manual &amp; API testing</h3>
+      <div class="chips"><span class="chip">Functional</span><span class="chip">Regression</span><span class="chip">End-to-end</span><span class="chip">API</span><span class="chip">Mobile (Android &amp; iOS)</span><span class="chip">System validation</span></div></div>
+    <div class="card"><h3><svg><use href="#i-code"/></svg>Test automation</h3>
+      <div class="chips"><span class="chip">Playwright</span><span class="chip">TypeScript</span><span class="chip">JavaScript</span><span class="chip">Selenium WebDriver</span><span class="chip">Appium</span></div></div>
+    <div class="card"><h3><svg><use href="#i-card"/></svg>Payments</h3>
+      <div class="chips"><span class="chip">Interac</span><span class="chip">Apple Pay</span><span class="chip">Worldpay</span><span class="chip">Nuvei</span><span class="chip">Deposits &amp; withdrawals</span><span class="chip">Back-office</span></div></div>
+    <div class="card"><h3><svg><use href="#i-db"/></svg>API, data &amp; debugging</h3>
+      <div class="chips"><span class="chip">Postman</span><span class="chip">REST APIs</span><span class="chip">SQL</span><span class="chip">DBeaver</span><span class="chip">OpenSearch</span><span class="chip">DevTools</span></div></div>
+    <div class="card" style="grid-column:1/-1"><h3><svg><use href="#i-tool"/></svg>Tools &amp; process</h3>
+      <div class="chips"><span class="chip">JIRA</span><span class="chip">Testmo</span><span class="chip">Git / GitHub</span><span class="chip">Claude Code</span><span class="chip">Agile / Scrum</span></div></div>
+  </div>
+</section>
+
+<section id="education">
+  <h2>Education</h2>
+  <p class="sub">Academic background</p>
+  <div class="list">
+    <div class="card row"><div><h3>Master's degree – Information Security</h3><div class="org">University of Library Studies and Information Technologies (UNIBIT), Sofia</div></div><span class="when">Graduated Oct 2026</span></div>
+    <div class="card row"><div><h3>Bachelor's degree – Telecommunications</h3><div class="org">Technical University of Sofia</div></div><span class="when">2014 – 2019</span></div>
+  </div>
+</section>
+
+<section id="certifications">
+  <h2>Certifications</h2>
+  <p class="sub">Professional qualifications in software testing</p>
+  <div class="list">
+    <div class="card row"><div><h3>QA Automation Engineer – Diploma for Professional Qualification</h3><div class="org">Software University (SoftUni)</div>
+      <div class="chips"><span class="chip">Playwright</span><span class="chip">Selenium</span><span class="chip">Appium</span><span class="chip">API testing</span><span class="chip">SQL</span></div>
+      <a class="cred" href="https://softuni.bg/Certificates/Details/261464/f87de57e" target="_blank" rel="noopener">View credential →</a></div><span class="when">May 2026</span></div>
+    <div class="card row"><div><h3>ISTQB Certified Tester – Foundation Level</h3><div class="org">ISTQB</div></div><span class="when">Nov 2024</span></div>
+  </div>
+</section>
+
+<section id="contact">
+  <h2>Contact</h2>
+  <p class="sub">Open to Manual QA / QA Automation roles – remote or hybrid</p>
+  <div class="contact">
+    <a class="card" href="mailto:glandzhev@gmail.com"><small>Email</small><b>glandzhev@gmail.com</b></a>
+    <a class="card" href="https://www.linkedin.com/in/georgi-landzhev-816991139/" target="_blank" rel="noopener"><small>LinkedIn</small><b>georgi-landzhev</b></a>
+  </div>
+</section>
+
+<footer>© 2026 Georgi Landzhev · Sofia, Bulgaria</footer>
+</div></main>
+
+<script>
+(function(){
+  var root=document.documentElement, KEY='theme';
+  function current(){return root.dataset.theme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}
+  function paint(){
+    var dark=current()==='dark';
+    document.querySelectorAll('.theme').forEach(function(b){
+      b.querySelector('use').setAttribute('href',dark?'#i-sun':'#i-moon');
+      b.querySelector('span').textContent=dark?'Light mode':'Dark mode';
+    });
+  }
+  try{var s=localStorage.getItem(KEY); if(s) root.dataset.theme=s;}catch(e){}
+  document.querySelectorAll('.theme').forEach(function(b){
+    b.addEventListener('click',function(){
+      root.dataset.theme=current()==='dark'?'light':'dark';
+      try{localStorage.setItem(KEY,root.dataset.theme)}catch(e){}
+      paint();
+    });
+  });
+  paint();
+  // Highlight the section in view
+  var links=[].slice.call(document.querySelectorAll('nav a'));
+  var obs=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){
+      links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id)});
+    }});
+  },{rootMargin:'-45% 0px -50% 0px'});
+  document.querySelectorAll('section[id]').forEach(function(s){obs.observe(s)});
+})();
+</script>
+</body>
+</html>
