@@ -335,12 +335,24 @@ footer{padding:56px 0 40px;color:var(--muted);font-size:13px;text-align:center}
   paint();
   // Highlight the section in view
   var links=[].slice.call(document.querySelectorAll('nav a'));
-  var obs=new IntersectionObserver(function(es){
-    es.forEach(function(e){ if(e.isIntersecting){
-      links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id)});
-    }});
-  },{rootMargin:'-45% 0px -50% 0px'});
-  document.querySelectorAll('section[id]').forEach(function(s){obs.observe(s)});
+  var sections=[].slice.call(document.querySelectorAll('section[id]'));
+  var lockUntil=0;
+  function mark(id){links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+id)})}
+  function update(){
+    if(Date.now()<lockUntil) return;
+    var id=sections[0].id;
+    // At the bottom of the page the last section wins, even if it is short
+    if(innerHeight+scrollY>=document.documentElement.scrollHeight-4){ id=sections[sections.length-1].id; }
+    else { sections.forEach(function(s){ if(s.getBoundingClientRect().top<=innerHeight*0.4) id=s.id; }); }
+    mark(id);
+  }
+  links.forEach(function(a){a.addEventListener('click',function(){
+    mark(a.getAttribute('href').slice(1)); lockUntil=Date.now()+900;
+    setTimeout(update,950);
+  })});
+  addEventListener('scroll',update,{passive:true});
+  addEventListener('resize',update);
+  update();
 })();
 </script>
 </body>
